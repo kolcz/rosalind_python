@@ -27,10 +27,9 @@ def computing_gc_content(dna_str: str) -> float:
 
   assert s_len <= 1000, "DNA string too long!"
 
-  g_len = len(*np.where(dna_arr == "G"))
-  c_len = len(*np.where(dna_arr == "C"))
+  gc_len = len(set(*np.where(dna_arr == "G")) | set(*np.where(dna_arr == "C")))
 
-  return ((g_len + c_len)/s_len)*100
+  return (gc_len/s_len)*100
 
 if __name__ == "__main__":
   with open("dataset.txt") as fin:
