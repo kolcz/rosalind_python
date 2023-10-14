@@ -1,6 +1,5 @@
 from code import counting_point_mutations, readline
 
-
 if __name__ == "__main__":
 
   with (open("sample_dataset.txt") as fin,
