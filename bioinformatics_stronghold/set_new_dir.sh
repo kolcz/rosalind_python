@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#Script to make directory and new empty files for problem.
+#  Script to make directory and new empty files for problem on Linux.
 
 if [[ -z ${1} ]]; then
   
@@ -9,7 +9,7 @@ if [[ -z ${1} ]]; then
   echo 'Syntax: set_new_dir.sh ${dir_name}'
   echo 
 
-  exit 0
+  exit 2
 
 else
 
