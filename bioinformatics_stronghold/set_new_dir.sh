@@ -17,6 +17,8 @@ else
   file_list=(".gitignore" "code.py" "test.py" "sample_dataset.txt")
   file_list+=("sample_output.txt" "dataset.txt" "output.txt")
 
+  gitignore_text=("__pycache__/*" "sample_*.txt")
+
   if [ ! -d ${1} ]; then
     mkdir ${1}
   fi
@@ -34,5 +36,7 @@ else
     fi
 
   done
+
+  gitignore_cont=$(cat .gitignore)
 
 fi
