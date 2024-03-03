@@ -15,7 +15,7 @@ if (!$args[0]) {
     $file_list = @(".gitignore", "code.py", "test.py", "sample_dataset.txt",
                    "sample_output.txt", "dataset.txt", "output.txt")
 
-    $gitignore_text = @("__pycache__/*", "sample_*.txt")
+    $gitignore_text = @("__pycache__/*", "sample_*")
 
     if ( !(Test-Path $args[0]) ) {
         New-Item -Path $args[0] -ItemType "directory" | Out-Null
