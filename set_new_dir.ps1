@@ -40,5 +40,5 @@ if (!$args[0]) {
         }
     }
 
-    Set-Location .. #Powershell doesn't run scripts in subshell
+    Set-Location .. #  Powershell doesn't run scripts in subshell
 }
