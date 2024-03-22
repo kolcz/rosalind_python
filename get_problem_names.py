@@ -1,6 +1,7 @@
 import sys
 import requests
 from bs4 import BeautifulSoup
+import re
 
 if __name__ == "__main__":
 
@@ -23,9 +24,17 @@ if __name__ == "__main__":
     with open("response.html", "w") as f:
         f.write(response.text)
     
+    problems = set()
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, features="html.parser")
         table = soup.find("table")
-        print(len(table.find_all("a"))) #TODO: parse links to get problem id's
+        links = table.find_all("a")
+        for link in links:
+            mat = re.match("/problems/([^/]+)/", link.get("href"))
+            if mat is not None:
+                problems.add(mat[1])
+
+    with open(f"problems_{args[1]}.txt", "w") as f:
+        f.write("\n".join(problems))
 
     
