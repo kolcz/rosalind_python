@@ -2,6 +2,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 from requests.exceptions import ConnectionError
+import os.path
 
 if __name__ == "__main__":
 
@@ -37,8 +38,7 @@ if __name__ == "__main__":
                 problem = href.split("/")[2]
                 problems.add(problem)
                 
-
-    with open(f"problems_{args[1]}.txt", "w") as f:
+    problems_dir = "problems"
+    problems_path = os.path.join(problems_dir, f"{args[1]}.txt")
+    with open(problems_path, "w") as f:
         f.write("\n".join(problems))
-
-    
