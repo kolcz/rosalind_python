@@ -1,7 +1,7 @@
 import sys
 import requests
 from bs4 import BeautifulSoup
-import re
+from requests.exceptions import ConnectionError
 
 if __name__ == "__main__":
 
@@ -20,9 +20,11 @@ if __name__ == "__main__":
             print("Specify problem group! Available groups are:\n" + "/".join(groups) + "\n")
             sys.exit(1)
 
-    response = requests.get(url)
-    with open("response.html", "w") as f:
-        f.write(response.text)
+    try:
+        response = requests.get(url)
+    except ConnectionError:
+        print("Connection error!")
+        sys.exit(1)
     
     problems = set()
     if response.status_code == 200:
@@ -30,9 +32,11 @@ if __name__ == "__main__":
         table = soup.find("table")
         links = table.find_all("a")
         for link in links:
-            mat = re.match("/problems/([^/]+)/", link.get("href"))
-            if mat is not None:
-                problems.add(mat[1])
+            href = link.get("href")
+            if href.startswith("/problems/"):
+                problem = href.split("/")[2]
+                problems.add(problem)
+                
 
     with open(f"problems_{args[1]}.txt", "w") as f:
         f.write("\n".join(problems))
