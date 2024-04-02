@@ -26,14 +26,15 @@ if (!$args[0]) {
         }
     }
 
-    #TODO: Move directory and files to problem directory
     if ($problems) {
 
-        if ( !(Test-Path $args[0]) ) {
-            New-Item -Path $args[0] -ItemType "directory" | Out-Null
+        $problem_path = Join-Path $problems $args[0]
+
+        if ( !(Test-Path $problem_path) ) {
+            New-Item -Path $problem_path -ItemType "directory" | Out-Null
         }
 
-        Set-Location $args[0]
+        Set-Location $problem_path
 
         foreach ($file in $file_list) {
             if (!(Test-Path $file)) {
@@ -52,13 +53,16 @@ if (!$args[0]) {
             }
         }
 
-        Set-Location .. #  Powershell doesn't run scripts in subshell
+        Set-Location ../.. #  Powershell doesn't run scripts in subshell
 
     } else {
 
         Write-Host 
         Write-Host 'Problem name not found!'
         Write-Host
+
+        Exit 1
+
     }
 
 }
