@@ -19,33 +19,58 @@ else
 
   gitignore_text=('__pycache__/*' 'sample_*')
 
-  if [ ! -d ${1} ]; then
-    mkdir ${1}
+  for file in $(ls problems)
+  do
+      mtch=$(cat "problems/${file}" | grep ${1})
+      
+      if [ $mtch ]; then
+        problems=($(echo $file | tr '.' "\n"))
+        problems=${problems[0]}
+        break
+      fi
+  done
+
+  if [ $problems ]; then
+  
+    problem_path="${problems}/${1}"
+
+    if [ ! -d ${problem_path} ]; then
+      mkdir ${problem_path}
+    fi
+
+    cd ${problem_path}
+
+    for file in ${file_list[@]}
+    do
+
+      if [ ! -f ${file} ]; then
+        touch ${file}
+      else
+        echo
+        echo "${file} already exists!"
+      fi
+
+    done
+
+    gitignore_cont=$(cat .gitignore)
+
+    for line in "${gitignore_text[@]}"
+    do
+
+      if [ -z "$(echo "${gitignore_cont}" | grep "${line}")" ]; then
+        echo "${line}" >> .gitignore
+      fi
+
+    done
+
+  else
+
+    echo
+    echo 'Problem name not found!'
+    echo 
+
+    exit 2
+
   fi
-
-  cd ${1}
-
-  for file in  ${file_list[@]}
-  do
-
-    if [ ! -f ${file} ]; then
-      touch ${file}
-    else
-      echo
-      echo "${file} already exists!"
-    fi
-
-  done
-
-  gitignore_cont=$(cat .gitignore)
-
-  for line in "${gitignore_text[@]}"
-  do
-
-    if [ -z "$(echo "${gitignore_cont}" | grep "${line}")" ]; then
-      echo "${line}" >> .gitignore
-    fi
-
-  done
 
 fi
