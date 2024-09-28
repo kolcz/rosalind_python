@@ -12,10 +12,8 @@ if (!$args[0]) {
 
 } else {
 
-    $file_list = @(".gitignore", "code.py", "test.py", "sample_dataset.txt",
+    $file_list = @("code.py", "test.py", "sample_dataset.txt",
                    "sample_output.txt", "dataset.txt", "output.txt")
-
-    $gitignore_text = @("__pycache__/*", "sample_*")
 
     $problems = $null
 
@@ -42,14 +40,6 @@ if (!$args[0]) {
             } else {
                 Write-Host
                 Write-Host "$file already exists!"
-            }
-        }
-
-        $gitignore_cont = Get-Content ".gitignore"
-
-        foreach ($line in $gitignore_text) {
-            if ( !($gitignore_cont -contains $line) ) {
-                Out-File -FilePath ".gitignore" -Append -InputObject $line
             }
         }
 
